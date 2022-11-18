@@ -1,0 +1,538 @@
+
+/* 
+lower position of input placeholder 'text (transform?)/post on slack 
+enlarge 'submit' button on input:focus (when typing)
+click into input blank (input:focus), 
+*/
+
+
+
+
+:root{
+    --desaturatedRed:rgb(206, 151, 151);
+    --softRed: hsl(0, 93%, 68%);
+    --darkGrayishRed: hsl(0, 6%, 24%);
+
+ 
+}
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: 'Josefin Sans', sans-serif;
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    /* flex:  */
+
+}
+footer{
+    position:absolute;
+    font-size:1rem;
+    bottom:1rem;
+    transform:translatex(50vw) translatex(-50%);
+
+}
+
+footer a:visited, 
+footer a:link{
+    text-decoration:none;
+    color:var(--desaturatedRed);
+}
+
+footer a:hover{
+    color: var(--darkGrayishRed);
+}
+
+
+main{
+    flex: 0 0 60%;
+    background-image: url(images/bg-pattern-desktop.svg);
+    background-size: cover;
+    position:relative;
+    display:flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: top;
+    padding:7rem 0  0 12vw; 
+
+}
+
+
+.heroContainer{
+
+    flex:1;
+    /* flex-shrink:1; */
+    background-image: url(images/hero-desktop.jpg);
+    background-repeat: no-repeat;
+    background-size:cover; 
+    background-position:center;
+}
+
+
+.heroMobileContainer{
+    transform:scale(1.4);
+    display:none;
+}
+
+
+.logo{
+    transform:scale(1.4); 
+    transform-origin:left;
+    
+    
+
+}
+
+header{
+    margin-top:12rem;
+    max-width:35rem
+}
+
+h1{
+    text-transform: uppercase;
+    font-size:5.75rem;
+    letter-spacing: 2rem;;
+}
+
+ 
+h1:not(span){
+    color:var(--darkGrayishRed)
+}
+
+header span{
+    color:var(--desaturatedRed);
+    font-weight:200;
+}
+
+p{
+    margin-top:3rem;
+    color:var(--desaturatedRed);
+    font-size:1.3rem;
+    letter-spacing: .09rem;
+    max-width:42rem;
+    line-height:1.75;
+}
+
+
+form{
+    display:flex;
+    max-width:max-content;
+    margin-top:3rem;
+    min-height:3.75rem;
+    position:relative;
+    border:none;
+    /* overflow:visible; */
+    /* min-width: 20rem; */
+}
+
+
+form input{
+    background-color:transparent;
+    border-radius:50px;
+    position:relative;
+    height:100%;
+    /* vertical-align: center; */
+    min-width:37rem;
+    border: 3px solid rgb(206, 151, 151, .5);
+    color: var(--darkGrayishRed);
+    font-weight:200;
+    font-family:'Josefin Sans', sans-serif; 
+    /* line-height: 0rem;; */
+    font-size:1.1rem;
+    padding-left: 1.5rem;
+    transition:200ms cubic-bezier(.47,2.6,.48,1.2);
+    /* transition:.3s ease-out; */ 
+    overflow:visible;   
+}
+
+
+/* input font original: 1.1 to 1.3 (focused) */
+
+
+form input:focus{
+    outline: none;
+    filter:drop-shadow( 0 1.25rem 20rem var(--desaturatedRed));
+    /* transform:scale(1.05); */
+    font-size:1.3rem;
+    /* background-color:rgba(255, 255, 255, 0.7); */
+    background-image: linear-gradient(135deg, hsl(0, 0%, 100%), hsl(0, 100%, 98%));
+    background:cover;
+    border: 3px solid rgb(206, 151, 151, .75);
+
+    
+
+}
+
+/* ----- click in input button enlarges -----*/
+
+form input:focus ~ button{
+    transform:scale(1.1);  
+    
+}
+
+
+form ::placeholder{
+    letter-spacing: .09rem;
+    color: rgb(206, 151, 151, .5);
+    font-weight: 200;
+    letter-spacing: .09rem;
+    /* vertical-align:bottom; */
+    
+}
+
+
+
+/* 
+--gradientOne: Linear, 135deg, from hsl(0, 0%, 100%), to hsl(0, 100%, 98%);
+    --gradientTwo:Linear, 135deg, from hsl(0, 80%, 86%), to hsl(0, 74%, 74%); */
+
+button{
+    border:none;
+    background-image: linear-gradient(135deg, hsl(0, 80%, 86%), hsl(0, 74%, 74%));
+    background:cover;
+    min-width:7rem;
+    min-height:100%;
+    border-radius:50px;
+    filter:drop-shadow( 0 2rem 2rem var(--desaturatedRed));
+    position:absolute;
+    right:0rem;
+    transition: 200ms cubic-bezier(.47,2.6,.48,1.2);
+    /* display:none; */
+    
+
+}
+
+button svg{
+    transform:scale(1.4);
+    transition: 150ms cubic-bezier(.47,2.6,.48,1.2);
+}
+
+
+
+button:hover{
+    cursor:pointer;
+    transform:scale(1.1) ;
+    
+}
+
+button:active{
+    transform:scale(1.2);   
+}
+
+
+
+
+/* --------- Input/Btn Interaction---------- */
+
+/* ------- Invalid Email: display svg in form::after, set outlint to red -------- */
+
+.exclamation, .message{
+    display:none;;
+    position:absolute;
+}
+
+.message{
+    color:red;
+    min-width:max-content;
+    left:1.5rem;
+    bottom:-2rem;
+}
+
+.exclamation{
+    right:23%;
+    align-self:center;
+    
+}
+
+/*---- while typing, before email is 'valid', displays button pseudo elements  ----*/
+
+/* the <input> blank */
+form input:invalid {
+    outline:3px solid red;
+    border:none;
+}
+
+/* Get the message to appear for invalid entry*/
+form input:invalid + .message{
+    display:inline-block;
+}
+
+ /* Get the svg to appear for invalid entry*/
+form input:invalid ~ .exclamation{
+    display:inline-block;
+} 
+
+/* -------------------------------------------------------------------------------- */
+
+
+/* ---------- Making Responsive: breakpoints ------------- */
+
+@media screen and (max-width:1850px){
+    .logo{
+        transform:scale(1);
+        margin:0rem; /* transform:translatex(3px); svg logo not aligning to container main left side, so manually translated */
+    }
+
+    .attribution{
+        font-size:10px;
+    }
+
+    header{
+        margin-top:9rem;
+    }
+
+    h1{
+        font-size:5.25rem;
+        letter-spacing: 1.5rem;;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width:1650px){
+
+    main{
+        padding:7rem 0  0 10vw; 
+    }
+
+    header{
+        margin-top:8rem;
+    }
+
+
+    main p{
+        margin-top:2.7rem;
+      
+        letter-spacing: .04rem;
+        max-width:35rem;
+        line-height:1.75;
+    }
+
+    form{
+        min-height:3.3rem;
+    }
+
+    /* input font size original: 1.1 to 1.3 (focused) */
+    /* input font size now: 1.0 to 1.1 (focused) */
+
+    form input{
+        min-width:30rem;
+
+        font-size:1rem; 
+    }
+
+    form input:focus{
+        font-size:1.1rem; /* for the placeholder font*/
+    }
+
+    button{
+        min-width:5.5rem;
+    }
+}
+
+
+
+@media screen and (max-width:1500px){
+
+    main{
+        padding:7rem 0  0 8.5vw; 
+    }
+
+    header{
+        margin-top:7.25rem;
+    }
+
+    main p{
+        margin-top:2.55rem;
+        font-size:1rem;
+        letter-spacing: .02rem;
+        max-width:33rem;
+        /* line-height:1.75; */
+    }
+
+    form{
+        min-height:3.1rem;
+    }
+
+    form input{                 /* input text is getting off at top, at both sizes (normal, and :focus) line-height:100% didn't help*/
+        min-width:28rem;
+    }
+
+    button{
+        min-width:5.5rem;
+    }
+
+    form input:focus{
+        font-size:1.1rem;
+        /* color:blue; */
+    }
+
+
+}
+
+@media screen and (max-width:1200px){
+
+    body{
+        flex-direction:column;
+    }
+
+    main{
+        flex:0 0 100%; /* maybe use in lieu of padding?*/
+        align-items:center;
+        padding:3rem 0  7rem 0;
+    }
+
+    .logo{
+        margin-left:-24rem;
+
+    }
+
+    /* Sibling (right side) of main disappears */
+    .heroContainer{
+        display:none;
+        flex:0;
+    }
+
+    /* main img appears */
+    .heroMobileContainer{
+        margin-top:6rem;
+        display:inline-block;
+        border-radius:5px;
+        
+        
+    }
+
+    header{
+        text-align: center;
+        margin-top:6rem;
+    }
+    h1{
+        font-size:4rem;
+    }
+/*  */
+    form input{
+        min-height: 3.1rem
+    }
+  
+}
+
+@media screen and (max-width:525px){
+
+    main{
+        padding:3rem 3rem  7rem 3rem;
+    }
+    .logo{
+        margin:0;                   /* take off margin from 1200px */
+        transform:scale(.75);
+        display:flex;
+       /* flex-direction:row; */
+
+        align-self: flex-start;
+        /* margin-left:1vw; */
+        
+        
+    }
+
+    .heroMobileContainer{
+        
+        width:100vw;
+        transform:scale(1) translatey(.75rem);
+        margin-top:2rem;
+        border-radius:0px;
+
+    }
+
+    header{
+        margin-top:3.5rem;
+        width:min-content;
+    }
+
+    h1{
+        font-size:3.5rem;
+        letter-spacing:.7rem ;
+        
+    }
+    form{
+        min-height:2.8rem;
+    }
+
+    form input{
+       min-width: 70vw;
+    }
+
+    button{
+        min-width: 5rem;
+    }
+
+    footer{
+        font-size:.75rem; /* <-- is inconsistent, sometimes works sometimes doesn't. */
+    }
+
+}
+
+@media screen and (max-width:475px){
+
+    main{
+        padding-top:2rem;
+    }
+
+    .heroMobileContainer{
+        margin-top: 1.2rem;
+    }
+    
+
+    form{
+        max-width:75vw;
+        margin-top:1.75rem;
+
+    }
+    form input{
+        min-height:2.5rem;
+        border: 2px solid rgb(206, 151, 151, .5);
+    }
+
+    button{
+        min-height:2.5rem;
+        min-width:4rem;
+    }
+    button svg{
+        transform:scale(1);
+    }
+
+    main p{
+        max-width:20rem;
+        font-size:14px;
+        text-align:center;
+    }
+
+  
+    h1{
+        font-size:3rem;
+    }
+
+    .exclamation{
+        top:.45rem;
+        right:5rem;
+        align-self:start;
+        
+    }
+
+    footer p{
+        font-size:4px;
+    }
+}
+
